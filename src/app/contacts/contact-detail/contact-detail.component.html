@@ -1,0 +1,59 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2>{{ contact.name }}</h2>
+    <span
+      ><img
+        [src]="contact.imageUrl"
+        alt="{{ contact.name }}"
+        class="image-responsive"
+        style="max-height: 50px"
+    /></span>
+    <div class="pull-right btn-toolbar">
+      <a class="btn btn-primary" [routerLink]="'../' + contact.id + '/edit'"
+        >Edit</a
+      >
+      <button class="btn btn-danger" (click)="onDelete()">Delete</button>
+    </div>
+  </div>
+  <div class="panel-body">
+    <a href="#" class="list-group-item clearfix">
+      <div class="pull-left">
+        <p class="list-group-item-heading"><b>Email:</b> {{ contact.email }}</p>
+        <p class="list-group-item-heading"><b>Phone:</b> {{ contact.phone }}</p>
+      </div>
+    </a>
+  </div>
+  <h4 *ngIf="contact?.group?.length">{{ contact.name }}'s Group</h4>
+  <div *ngFor="let group of contact?.group; let i = index">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h2>{{ group.name }}</h2>
+        <span
+          ><img
+            [src]="group.imageUrl"
+            alt="{{ group.name }}"
+            class="image-responsive"
+            style="max-height: 50px"
+        /></span>
+        <div class="pull-right btn-toolbar">
+          <a class="btn btn-primary" [routerLink]="'../' + group.id + '/edit'"
+            >Edit</a
+          >
+          <button class="btn btn-danger" (click)="onRemoveItem(i)">X</button>
+        </div>
+      </div>
+      <div class="panel-body">
+        <a href="#" class="list-group-item clearfix">
+          <div class="pull-left">
+            <p class="list-group-item-heading">
+              <b>Email:</b> {{ group.email }}
+            </p>
+            <p class="list-group-item-heading">
+              <b>Phone:</b> {{ group.phone }}
+            </p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
