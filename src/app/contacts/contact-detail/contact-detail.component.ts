@@ -29,6 +29,7 @@ export class ContactDetailComponent implements OnInit {
       return;
     }
     this.contact.group.splice(index, 1);
+    this.contactService.updateContact(this.contact, this.contact);
   }
   onDelete() {
     this.contactService.deleteContact(this.contact);

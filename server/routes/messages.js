@@ -6,7 +6,7 @@ const TYPE = "messages";
 
 router.get("/", async (req, res, next) => {
   try {
-    const messages = await Message.find();
+    const messages = await Message.find().exec();
     res.json(messages);
   } catch (error) {
     res.status(500).send(error.message);

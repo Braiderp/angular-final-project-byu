@@ -17,12 +17,14 @@ router.get("/", async (req, res, next) => {
 router.put("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
-    const document = await Document.findOne({ id });
+    const document = await Document.findOne({ id }).exec();
+    console.log("req.body", req.body);
+    console.log("document", document);
     const { name, url, description } = req.body;
     document.name = name;
     document.url = url;
     document.description = description;
-    Document.updateOne({ id }, document);
+    await Document.updateOne({ id: id }, document);
     res.json({ message: "worked" });
   } catch (error) {
     res.status(500).send(error.message);
@@ -55,7 +57,7 @@ router.delete("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
     console.log("delete", id);
-    await Document.deleteOne({ id });
+    await Document.deleteOne({ id }).exec();
     res.status(201).json({
       message: "Document deleted successfully",
     });

@@ -6,7 +6,7 @@ const TYPE = "contacts";
 
 router.get("/", async (req, res, next) => {
   try {
-    const contacts = await Contact.find().populate("group");
+    const contacts = await Contact.find().populate("group").exec();
     res.json(contacts);
   } catch (error) {
     res.status(500).send(error.message);
@@ -17,14 +17,14 @@ router.put("/:id", async (req, res, next) => {
   try {
     const { name, email, phone, imageUrl, group } = req.body;
     const { id } = req.params;
-    const contact = await Contact.findOne({ id });
+    const contact = await Contact.findOne({ id }).exec();
     contact.name = name;
     contact.email = email;
     contact.phone = phone;
     contact.imageUrl = imageUrl;
     contact.group = group;
     console.log("contact", contact);
-    Contact.updateOne({ id }, contact);
+    await Contact.updateOne({ id }, contact).exec();
     res.json({ message: "worked" });
   } catch (error) {
     res.status(500).send(error.message);
@@ -53,7 +53,7 @@ router.post("/", (req, res, next) => {
 router.delete("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
-    await Contact.deleteOne({ id });
+    await Contact.deleteOne({ id }).exec();
     res.status(201).json({
       message: "Contact deleted successfully",
     });
